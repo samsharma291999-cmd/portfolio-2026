@@ -26,8 +26,7 @@ export default function ThemeToggle() {
     document.documentElement.style.setProperty("--theme-x", `${x}px`);
     document.documentElement.style.setProperty("--theme-y", `${y}px`);
     document.documentElement.style.setProperty("--theme-r", `${maxR}px`);
-    // @ts-expect-error — View Transitions API not yet in TS lib
-    document.startViewTransition(() => applyTheme(next));
+    (document as any).startViewTransition(() => applyTheme(next));
   };
 
   return (
