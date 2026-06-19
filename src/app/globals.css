@@ -1,0 +1,173 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/standard.css";
+@import "@fontsource-variable/hanken-grotesk/wght.css";
+@import "@fontsource/geist-mono/500.css";
+
+/* ============================================================
+   DESIGN TOKENS — direct translation of Portfolio Design System
+   ============================================================ */
+
+@theme {
+  /* ---- Color: Ink ---- */
+  --color-ink: #1a1a1f;
+  --color-ink-2: #57565e;
+  --color-ink-3: #8a8a93;
+
+  /* ---- Color: Accent (Oxblood) ---- */
+  --color-accent: #8c3a3a;
+  --color-accent-ink: #7c2e36;
+  --color-accent-strong: #5e2228;
+
+  /* ---- Color: Surface ---- */
+  --color-canvas: #f7f6f4;
+  --color-surface: #ffffff;
+  --color-surface-sunken: #f0efec;
+  --color-surface-dark: #111110;
+
+  /* ---- Color: On Dark ---- */
+  --color-on-dark: #f5f4f1;
+  --color-on-dark-2: #a8a7a2;
+  --color-accent-on-dark: #c98890;
+
+  /* ---- Color: Border ---- */
+  --color-border-hairline: #e4e3df;
+  --color-border-strong: #d8d7d2;
+
+  /* ---- Fonts ---- */
+  --font-display: "Fraunces Variable", "Fraunces", ui-serif, Georgia, serif;
+  --font-body: "Hanken Grotesk Variable", "Hanken Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-label: "Geist Mono", ui-monospace, "SF Mono", monospace;
+
+  /* ---- Spacing scale (4px base) ---- */
+  --spacing-1: 0.25rem;   /* 4 */
+  --spacing-2: 0.5rem;    /* 8 */
+  --spacing-3: 0.75rem;   /* 12 */
+  --spacing-4: 1rem;      /* 16 */
+  --spacing-5: 1.5rem;    /* 24 */
+  --spacing-6: 2rem;      /* 32 */
+  --spacing-7: 3rem;      /* 48 */
+  --spacing-8: 4rem;      /* 64 */
+  --spacing-9: 6rem;      /* 96 */
+  --spacing-10: 8rem;     /* 128 */
+  --spacing-11: 10rem;    /* 160 */
+
+  /* ---- Container widths ---- */
+  --container-content: 1200px;
+  --container-wide: 1440px;
+  --container-reading: 680px;
+
+  /* ---- Radius ---- */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 14px;
+  --radius-full: 999px;
+
+  /* ---- Shadow (soft, warm-tinted) ---- */
+  --shadow-sm: 0 1px 2px rgba(17, 17, 16, 0.04);
+  --shadow-md: 0 8px 24px rgba(17, 17, 16, 0.06);
+  --shadow-lg: 0 24px 60px rgba(17, 17, 16, 0.10);
+
+  /* ---- Motion durations ---- */
+  --duration-micro: 180ms;
+  --duration-state: 280ms;
+  --duration-section: 360ms;
+  --duration-page: 520ms;
+
+  /* ---- Easing ---- */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+  --ease-inout: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ============================================================
+   DARK MODE TOKEN OVERRIDES
+   ============================================================ */
+
+html.dark {
+  --color-canvas:          #111110;
+  --color-surface:         #1a1a18;
+  --color-surface-sunken:  #0e0e0d;
+  --color-surface-dark:    #0a0a09;
+  --color-ink:             #f5f4f1;
+  --color-ink-2:           #a8a7a2;
+  --color-ink-3:           #6b6a66;
+  --color-border-hairline: #2a2a28;
+  --color-border-strong:   #383836;
+  --color-accent:          #c98890;
+  --color-accent-ink:      #c98890;
+  --color-accent-strong:   #e0a0a8;
+}
+
+/* ============================================================
+   BASE
+   ============================================================ */
+
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+body {
+  background: var(--color-canvas);
+  color: var(--color-ink);
+  font-family: var(--font-body);
+  font-feature-settings: "kern" 1;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-dark);
+}
+
+/* Focus ring — visible on every interactive element, never removed */
+:focus-visible {
+  outline: 2px solid var(--color-accent-ink);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* Reading measure utility — 60-72ch enforced via width, not font-size */
+.measure-reading {
+  max-width: var(--container-reading);
+}
+
+/* Anchor sections need top clearance so the fixed nav never overlaps
+   the section heading when jumped to via anchor link or scrollIntoView */
+#work,
+#perspective,
+#about,
+#contact {
+  scroll-margin-top: 96px;
+}
+
+/* Theme toggle — circular reveal via View Transitions API */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+
+::view-transition-new(root) {
+  clip-path: circle(0px at var(--theme-x, 50%) var(--theme-y, 50%));
+  animation: theme-reveal 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+@keyframes theme-reveal {
+  to {
+    clip-path: circle(var(--theme-r, 150vmax) at var(--theme-x, 50%) var(--theme-y, 50%));
+  }
+}

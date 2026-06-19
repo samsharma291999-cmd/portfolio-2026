@@ -1,0 +1,10 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(curl -s http://localhost:3000/work/staynow)",
+      "Bash(ls /var/folders/*/T/*.png /var/folders/*/T/*.jpg 2>/dev/null | head -5; ls ~/Downloads/*.png ~/Downloads/*.jpg 2>/dev/null | grep -i stay | head -5)",
+      "Bash(find /tmp -name \"*.png\" -o -name \"*.jpg\" 2>/dev/null | head -10; find /var/folders -name \"*.png\" -newer /Users/shivamsharma/Downloads/Sanat.png 2>/dev/null | head -5)",
+      "Bash(npm run *)"
+    ]
+  }
+}

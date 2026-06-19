@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>StayNow Demo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --brand:#3B5BFF;
+  --brand-deep:#2C45D6;
+  --ink:#1A2640;
+  --muted:#8A93A6;
+  --hairline:#E6E9F0;
+  --glass:rgba(255,255,255,0.93);
+}
+html,body{width:100%;height:100%;overflow:hidden;background:#0c1829}
+
+/* ── STAGE ── */
+.stage{
+  position:relative;width:100%;height:100%;
+  overflow:hidden;container-type:size;
+  font-family:'Inter',sans-serif;
+}
+
+/* ── SEARCH SCREEN ── */
+.screen--search{position:absolute;inset:0}
+
+.hero-bg{
+  position:absolute;inset:0;
+  background:linear-gradient(145deg,#0c1829 0%,#1e4d7b 50%,#0d2d4a 100%);
+}
+.hero-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.hero-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(12,18,33,0.52) 0%,rgba(12,18,33,0.08) 55%);
+}
+
+/* Nav */
+.nav{
+  position:absolute;top:0;left:0;right:0;z-index:2;
+  display:flex;align-items:center;justify-content:flex-end;
+  gap:clamp(6px,1.8cqw,20px);
+  padding:clamp(8px,1.8cqh,18px) clamp(10px,2.5cqw,28px);
+}
+.nav-link{
+  font-size:clamp(8px,1cqw,12px);color:rgba(255,255,255,0.8);font-weight:500;white-space:nowrap;
+}
+.nav-avatar{
+  width:clamp(22px,2.6cqw,32px);height:clamp(22px,2.6cqw,32px);
+  border-radius:50%;background:var(--brand);
+  display:flex;align-items:center;justify-content:center;
+  font-size:clamp(9px,1.1cqw,13px);font-weight:600;color:#fff;flex-shrink:0;
+}
+
+/* Hero content */
+.hero-content{
+  position:absolute;inset:0;z-index:2;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:0 4%;gap:clamp(6px,1.5cqh,16px);
+}
+.eyebrow{
+  font-size:clamp(7px,0.85cqw,11px);font-weight:500;
+  color:rgba(255,255,255,0.68);text-align:center;letter-spacing:0.06em;
+}
+.hero-content h1{
+  font-family:'Poppins',sans-serif;
+  font-size:clamp(0.9rem,3.4cqw,2.2rem);font-weight:600;
+  color:#fff;text-align:center;letter-spacing:-0.01em;line-height:1.18;
+  max-width:80%;
+}
+
+/* Search pill */
+.searchbar{
+  position:relative;
+  display:flex;align-items:stretch;
+  background:var(--glass);
+  backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);
+  border-radius:999px;
+  box-shadow:0 20px 56px rgba(12,18,33,0.30);
+  width:min(94%,860px);
+  padding:0 clamp(3px,0.4cqw,6px);
+}
+.field{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(8px,1cqh,14px) clamp(8px,1.5cqw,18px);
+  flex:1;min-width:0;position:relative;
+}
+.field+.field::before{
+  content:'';position:absolute;left:0;top:18%;height:64%;width:1px;background:var(--hairline);
+}
+.field-label{
+  font-size:clamp(6px,0.72cqw,9px);font-weight:600;
+  text-transform:uppercase;letter-spacing:0.09em;color:var(--muted);white-space:nowrap;
+}
+.field-value{
+  display:flex;align-items:center;gap:clamp(3px,0.35cqw,5px);
+  margin-top:clamp(2px,0.25cqh,3px);
+}
+.field-icon{font-size:clamp(8px,0.9cqw,12px);flex-shrink:0;line-height:1}
+.field-text{
+  font-size:clamp(8px,0.95cqw,12px);font-weight:500;
+  color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.field-text.typed{color:var(--ink)}
+.field--focused .field-label{color:var(--brand)}
+
+.caret{
+  display:inline-block;width:1.5px;height:0.9em;
+  background:var(--brand);vertical-align:middle;margin-left:1px;opacity:0;
+}
+.caret.blinking{animation:blink 0.75s step-end infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0}}
+
+.search-btn{
+  display:flex;align-items:center;justify-content:center;
+  background:var(--brand);border-radius:999px;flex-shrink:0;
+  width:clamp(32px,4cqw,50px);height:clamp(32px,4cqh,46px);
+  margin:auto clamp(3px,0.5cqw,6px) auto 0;
+}
+.search-btn svg{width:clamp(11px,1.3cqw,17px);height:clamp(11px,1.3cqw,17px)}
+
+/* Suggestions */
+.suggestions{
+  position:absolute;top:calc(100% + 6px);left:0;right:0;
+  background:#fff;border-radius:14px;
+  box-shadow:0 14px 36px rgba(12,18,33,0.16);
+  overflow:hidden;opacity:0;transform:translateY(6px);
+  pointer-events:none;z-index:20;
+}
+.sug-item{
+  display:flex;align-items:center;gap:clamp(6px,1cqw,14px);
+  padding:clamp(7px,0.9cqh,12px) clamp(8px,1.5cqw,18px);
+  border-bottom:1px solid var(--hairline);
+}
+.sug-item:last-child{border-bottom:none}
+.sug-item.hi{background:rgba(59,91,255,0.05)}
+.sug-ico{
+  width:clamp(20px,2cqw,28px);height:clamp(20px,2cqw,28px);
+  border-radius:50%;background:rgba(59,91,255,0.1);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.sug-main{font-size:clamp(8px,0.95cqw,12px);font-weight:600;color:var(--ink)}
+.sug-sub{font-size:clamp(7px,0.78cqw,10px);color:var(--muted);margin-top:1px}
+
+/* ── RESULTS SCREEN ── */
+.screen--results{position:absolute;inset:0;opacity:0}
+
+/* Video fills entire results screen */
+.video-full{position:absolute;inset:0;overflow:hidden;background:linear-gradient(145deg,#0c1829,#1e4d7b)}
+.video-bg{position:absolute;inset:0;will-change:transform;transform-origin:center center}
+.video-bg img{width:100%;height:100%;object-fit:cover;display:block}
+.video-top-overlay{
+  position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(12,18,33,0.35) 0%,transparent 40%);
+}
+
+/* Video meta — top-left, stays visible above panel */
+.video-meta{
+  position:absolute;top:clamp(8px,2cqh,20px);left:clamp(10px,2.5cqw,24px);
+  display:flex;align-items:center;gap:clamp(5px,0.8cqw,12px);
+  opacity:0;transform:translateY(-6px);z-index:4;
+}
+.play-btn{
+  width:clamp(24px,2.6cqw,36px);height:clamp(24px,2.6cqw,36px);
+  border-radius:50%;background:rgba(255,255,255,0.20);backdrop-filter:blur(4px);
+  display:flex;align-items:center;justify-content:center;flex-shrink:0;
+}
+.play-btn svg{width:clamp(8px,1cqw,13px);height:clamp(8px,1cqw,13px);margin-left:2px}
+.video-title{
+  font-family:'Poppins',sans-serif;
+  font-size:clamp(9px,1.2cqw,15px);font-weight:600;
+  color:#fff;letter-spacing:0.04em;text-transform:uppercase;
+}
+.video-sub{font-size:clamp(7px,0.75cqw,10px);color:rgba(255,255,255,0.62);margin-top:1px}
+
+/* Progress bar at very top */
+.progress-bar{position:absolute;top:0;left:0;right:0;height:2px;background:rgba(255,255,255,0.15);z-index:5}
+.progress-fill{height:100%;width:0%;background:var(--brand)}
+
+/* Hotels panel — slides up from bottom */
+.hotels-panel{
+  position:absolute;bottom:0;left:0;right:0;
+  height:52%;
+  background:#fff;
+  border-radius:clamp(10px,1.5cqw,20px) clamp(10px,1.5cqw,20px) 0 0;
+  box-shadow:0 -8px 32px rgba(12,18,33,0.14);
+  transform:translateY(100%);
+  z-index:3;
+  display:flex;flex-direction:column;
+  padding:clamp(10px,1.8cqh,20px) clamp(10px,2cqw,22px) clamp(6px,1cqh,14px);
+  gap:clamp(6px,1cqh,12px);
+  overflow:hidden;
+}
+
+/* Drag handle */
+.panel-handle{
+  width:clamp(28px,4cqw,44px);height:3px;border-radius:999px;
+  background:var(--hairline);margin:0 auto clamp(2px,0.4cqh,6px);flex-shrink:0;
+}
+
+.hotels-heading{
+  font-family:'Poppins',sans-serif;
+  font-size:clamp(10px,1.4cqw,17px);font-weight:600;color:var(--ink);
+  opacity:0;transform:translateY(8px);flex-shrink:0;
+}
+
+.hotel-grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(6px,1cqw,12px);flex:1;min-height:0;
+}
+
+.hotel-card{
+  background:#fff;border-radius:clamp(10px,1.2cqw,16px);
+  border:1px solid var(--hairline);
+  box-shadow:0 4px 16px rgba(12,18,33,0.06);
+  overflow:hidden;display:flex;flex-direction:column;
+  opacity:0;transform:translateY(16px);will-change:transform,opacity;
+  min-height:0;
+}
+
+/* Image — fixed 45% of card */
+.himg{
+  flex:0 0 45%;min-height:0;overflow:hidden;
+}
+
+.hbody{
+  flex:1;min-height:0;overflow:hidden;
+  padding:clamp(5px,0.7cqw,10px) clamp(6px,0.8cqw,11px);
+  display:flex;flex-direction:column;gap:clamp(2px,0.3cqh,4px);
+}
+.hname{
+  font-family:'Poppins',sans-serif;
+  font-size:clamp(7px,0.85cqw,11px);font-weight:600;color:var(--ink);
+  line-height:1.25;overflow:hidden;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;
+}
+.hloc{
+  display:flex;align-items:center;gap:2px;
+  font-size:clamp(6px,0.68cqw,9px);color:var(--muted);
+  overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+}
+.hfooter{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:auto;
+}
+.hrating{
+  display:flex;align-items:center;gap:2px;
+  font-size:clamp(6px,0.72cqw,9px);font-weight:600;color:var(--ink);
+}
+.hprice{font-size:clamp(6px,0.75cqw,10px);font-weight:700;color:var(--ink)}
+.hprice span{font-weight:400;color:var(--muted);font-size:0.9em}
+
+/* ── CURSOR — solid dark arrow ── */
+.cursor{
+  position:absolute;top:0;left:0;
+  pointer-events:none;z-index:999;will-change:transform;
+  transform:translate(-300px,-300px);
+}
+.ripple{
+  position:absolute;top:0;left:0;
+  width:26px;height:26px;border-radius:50%;
+  border:2px solid var(--brand);
+  transform:translate(-50%,-50%) scale(0);opacity:0;
+  pointer-events:none;
+}
+</style>
+</head>
+<body>
+<div class="stage" id="stage">
+
+  <!-- SEARCH SCREEN -->
+  <div class="screen--search" id="ss">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="" onerror="this.style.display='none'">
+      <div class="hero-overlay"></div>
+    </div>
+
+    <div class="nav">
+      <span class="nav-link">Help</span>
+      <span class="nav-link">Trips</span>
+      <span class="nav-link">Notifications</span>
+      <div class="nav-avatar">B</div>
+    </div>
+
+    <div class="hero-content">
+      <div class="eyebrow">── Offering Best Traveling Experience for You ──</div>
+      <h1>Save Money &amp; Enjoy Great<br>Traveling Experiences.</h1>
+
+      <div class="searchbar" id="searchbar">
+        <div class="field" id="fwhere">
+          <div class="field-label">Where To</div>
+          <div class="field-value">
+            <span class="field-icon">📍</span>
+            <span class="field-text" id="ftext">Search Destinations, Hotels</span><span class="caret" id="caret"></span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Check-In</div>
+          <div class="field-value">
+            <span class="field-icon">🗓</span>
+            <span class="field-text">Select Date</span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Check-Out</div>
+          <div class="field-value">
+            <span class="field-icon">🗓</span>
+            <span class="field-text">Select Date</span>
+          </div>
+        </div>
+        <div class="field">
+          <div class="field-label">Rooms &amp; Guests</div>
+          <div class="field-value">
+            <span class="field-icon">👤</span>
+            <span class="field-text">2 Adults · 1 Room</span>
+          </div>
+        </div>
+        <div class="search-btn" id="sbtn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="7"/><line x1="16.5" y1="16.5" x2="22" y2="22"/>
+          </svg>
+        </div>
+        <div class="suggestions" id="suggs">
+          <div class="sug-item hi" id="sug0">
+            <div class="sug-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#3B5BFF" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5" fill="#3B5BFF" stroke="none"/></svg></div>
+            <div><div class="sug-main">Lago di Braies, Italy</div><div class="sug-sub">Trentino-Alto Adige, Italy</div></div>
+          </div>
+          <div class="sug-item">
+            <div class="sug-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8A93A6" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
+            <div><div class="sug-main">Lago Maggiore, Italy</div><div class="sug-sub">Piedmont, Italy</div></div>
+          </div>
+          <div class="sug-item">
+            <div class="sug-ico"><svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="#8A93A6" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg></div>
+            <div><div class="sug-main">Lago di Garda, Italy</div><div class="sug-sub">Lombardy, Italy</div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULTS SCREEN -->
+  <div class="screen--results" id="sr">
+    <!-- Video full bleed -->
+    <div class="video-full">
+      <div class="video-bg" id="vbg">
+        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=1600&q=80" alt="" onerror="this.style.display='none'">
+      </div>
+      <div class="video-top-overlay"></div>
+    </div>
+
+    <!-- Video meta top-left -->
+    <div class="video-meta" id="vmeta">
+      <div class="play-btn">
+        <svg viewBox="0 0 24 24" fill="white"><polygon points="6,3 20,12 6,21"/></svg>
+      </div>
+      <div>
+        <div class="video-title">Lago di Braies · Italy</div>
+        <div class="video-sub">Location Preview</div>
+      </div>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="progress-bar"><div class="progress-fill" id="vprog"></div></div>
+
+    <!-- Hotels panel slides up from bottom -->
+    <div class="hotels-panel" id="hpanel">
+      <div class="panel-handle"></div>
+      <div class="hotels-heading" id="hhead">Hotels in Lago di Braies</div>
+      <div class="hotel-grid">
+
+        <div class="hotel-card" id="c0">
+          <div class="himg" style="background:linear-gradient(160deg,#1b4f8a 0%,#3a8fc4 100%)"></div>
+          <div class="hbody">
+            <div class="hname">Hotel Lago di Braies</div>
+            <div class="hloc">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              Braies, South Tyrol
+            </div>
+            <div class="hfooter">
+              <div class="hrating"><svg width="8" height="8" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>4.9</div>
+              <div class="hprice">€240<span>/night</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hotel-card" id="c1">
+          <div class="himg" style="background:linear-gradient(160deg,#1a5c22 0%,#3a9e46 100%)"></div>
+          <div class="hbody">
+            <div class="hname">Pragser Wildsee Lodge</div>
+            <div class="hloc">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              Braies, South Tyrol
+            </div>
+            <div class="hfooter">
+              <div class="hrating"><svg width="8" height="8" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>4.8</div>
+              <div class="hprice">€198<span>/night</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hotel-card" id="c2">
+          <div class="himg" style="background:linear-gradient(160deg,#3d1a6e 0%,#7a4fc0 100%)"></div>
+          <div class="hbody">
+            <div class="hname">Dolomiti Alpine Retreat</div>
+            <div class="hloc">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              Dolomites, Italy
+            </div>
+            <div class="hfooter">
+              <div class="hrating"><svg width="8" height="8" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>4.7</div>
+              <div class="hprice">€175<span>/night</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="hotel-card" id="c3">
+          <div class="himg" style="background:linear-gradient(160deg,#5c2d1a 0%,#b06030 100%)"></div>
+          <div class="hbody">
+            <div class="hname">Hubertus Mountain Refugio</div>
+            <div class="hloc">
+              <svg width="8" height="8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/></svg>
+              South Tyrol, Italy
+            </div>
+            <div class="hfooter">
+              <div class="hrating"><svg width="8" height="8" viewBox="0 0 24 24" fill="#F59E0B"><polygon points="12,2 15.09,8.26 22,9.27 17,14.14 18.18,21.02 12,17.77 5.82,21.02 7,14.14 2,9.27 8.91,8.26"/></svg>4.9</div>
+              <div class="hprice">€320<span>/night</span></div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- CURSOR — solid dark arrow (matches OS cursor style) -->
+  <div class="cursor" id="cursor">
+    <svg width="20" height="24" viewBox="0 0 20 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M2 1L18 12.5L11.5 14.2L15.5 23L12.2 24.4L8.2 15.8L2 21.5L2 1Z" fill="#1A2640"/>
+    </svg>
+    <div class="ripple" id="ripple"></div>
+  </div>
+
+</div>
+
+<script>
+(function(){
+  var stage  = document.getElementById('stage');
+  var cursor = document.getElementById('cursor');
+  var ripple = document.getElementById('ripple');
+  var ss     = document.getElementById('ss');
+  var sr     = document.getElementById('sr');
+  var fwhere = document.getElementById('fwhere');
+  var ftext  = document.getElementById('ftext');
+  var caret  = document.getElementById('caret');
+  var suggs  = document.getElementById('suggs');
+  var sug0   = document.getElementById('sug0');
+  var sbtn   = document.getElementById('sbtn');
+  var vmeta  = document.getElementById('vmeta');
+  var vprog  = document.getElementById('vprog');
+  var vbg    = document.getElementById('vbg');
+  var hpanel = document.getElementById('hpanel');
+  var hhead  = document.getElementById('hhead');
+  var cards  = [
+    document.getElementById('c0'), document.getElementById('c1'),
+    document.getElementById('c2'), document.getElementById('c3')
+  ];
+
+  var TYPE_TEXT = 'Lago di Braies, Italy';
+  var coords = {};
+
+  function cx(el) {
+    var sr_ = stage.getBoundingClientRect(), er = el.getBoundingClientRect();
+    return { x: er.left - sr_.left + er.width/2, y: er.top - sr_.top + er.height/2 };
+  }
+
+  function computeCoords() {
+    coords.field = cx(fwhere);
+    coords.sug0  = cx(sug0);
+    coords.btn   = cx(sbtn);
+  }
+
+  function clickAnim() {
+    gsap.timeline()
+      .to(cursor, {scale:0.82, duration:0.08, ease:'power1.in'})
+      .to(cursor, {scale:1,    duration:0.10, ease:'power1.out'});
+    gsap.set(ripple, {opacity:1, scale:0});
+    gsap.to(ripple, {scale:1.8, opacity:0, duration:0.42, ease:'power1.out'});
+  }
+
+  function resetAll() {
+    gsap.set(ss,     {opacity:1, y:0});
+    gsap.set(sr,     {opacity:0});
+    gsap.set(hpanel, {y:'100%'});
+    gsap.set(vbg,    {scale:1, x:0, y:0});
+    gsap.set(vmeta,  {opacity:0, y:-6});
+    gsap.set(vprog,  {width:'0%'});
+    gsap.set(hhead,  {opacity:0, y:8});
+    gsap.set(cards,  {opacity:0, y:16, boxShadow:'0 4px 16px rgba(12,18,33,0.06)'});
+    gsap.set(sbtn,   {scale:1});
+    ftext.textContent = 'Search Destinations, Hotels';
+    ftext.className   = 'field-text';
+    caret.classList.remove('blinking');
+    gsap.set(caret,  {opacity:0});
+    fwhere.classList.remove('field--focused');
+    gsap.set(suggs,  {opacity:0, y:6});
+    gsap.set(cursor, {x:-300, y:-300, scale:1, opacity:1});
+  }
+
+  function buildTL() {
+    computeCoords();
+
+    var tl = gsap.timeline({
+      repeat: -1,
+      repeatDelay: 1.2,
+      defaults: {ease:'power2.out'},
+      onRepeat: function() { resetAll(); computeCoords(); }
+    });
+
+    // 0.6 — cursor travels to Where To
+    tl.to(cursor, {
+      x:function(){return coords.field.x-3;},
+      y:function(){return coords.field.y-3;},
+      duration:1.0, ease:'power2.inOut'
+    }, 0.6);
+
+    // 1.6 — click + focus
+    tl.add(function(){
+      clickAnim();
+      fwhere.classList.add('field--focused');
+      gsap.set(caret, {opacity:1});
+      caret.classList.add('blinking');
+    }, 1.6);
+
+    // 1.9 — typewriter (21 chars × 50ms = 1.05s → ends ~2.95s)
+    var CD = 0.05;
+    for (var i = 1; i <= TYPE_TEXT.length; i++) {
+      (function(idx){
+        tl.add(function(){
+          ftext.textContent = TYPE_TEXT.slice(0, idx);
+          if (idx === 1) ftext.className = 'field-text typed';
+        }, 1.9 + (idx-1)*CD);
+      })(i);
+    }
+
+    // 3.3 — stop caret
+    tl.add(function(){
+      caret.classList.remove('blinking');
+      gsap.set(caret, {opacity:0});
+    }, 3.3);
+
+    // 3.4 — suggestions
+    tl.to(suggs, {opacity:1, y:0, duration:0.20, ease:'power3.out'}, 3.4);
+
+    // 4.0 — cursor to top suggestion
+    tl.to(cursor, {
+      x:function(){return coords.sug0.x-3;},
+      y:function(){return coords.sug0.y-3;},
+      duration:0.38, ease:'power1.out'
+    }, 4.0);
+
+    // 4.4 — pick suggestion
+    tl.add(function(){
+      clickAnim();
+      gsap.to(suggs, {opacity:0, y:6, duration:0.16, ease:'power2.in'});
+      fwhere.classList.remove('field--focused');
+    }, 4.4);
+
+    // 4.7 — cursor to search button
+    tl.to(cursor, {
+      x:function(){return coords.btn.x-3;},
+      y:function(){return coords.btn.y-3;},
+      duration:0.55, ease:'power2.inOut'
+    }, 4.7);
+
+    // 5.3 — click search
+    tl.add(function(){
+      clickAnim();
+      gsap.to(sbtn, {scale:0.93, duration:0.09, ease:'power1.in'});
+      gsap.to(sbtn, {scale:1,    duration:0.14, ease:'power1.out', delay:0.09});
+    }, 5.3);
+
+    // 5.6 — search screen lifts out, cursor fades
+    tl.to(ss,     {opacity:0, y:'-5%', duration:0.34, ease:'power2.in'}, 5.6);
+    tl.to(cursor, {opacity:0, duration:0.18}, 5.6);
+
+    // 6.0 — results in, Ken Burns, progress bar, meta
+    tl.to(sr,  {opacity:1, duration:0.36, ease:'power2.out'}, 6.0);
+    tl.fromTo(vbg,
+      {scale:1.0, x:'0%', y:'0%'},
+      {scale:1.10, x:'-2.5%', y:'-1.5%', duration:11, ease:'linear'},
+    6.0);
+    tl.to(vmeta, {opacity:1, y:0, duration:0.36, ease:'power3.out'}, 6.2);
+    tl.to(vprog, {width:'100%', duration:2.5, ease:'linear'}, 6.1);
+
+    // 8.5 — hotels panel slides up
+    tl.to(hpanel, {y:'0%', duration:0.68, ease:'power3.out'}, 8.5);
+
+    // 8.9 — heading fades in
+    tl.to(hhead, {opacity:1, y:0, duration:0.30, ease:'power3.out'}, 8.9);
+
+    // 9.1 — cards stagger in
+    tl.to(cards, {opacity:1, y:0, duration:0.44, ease:'power3.out', stagger:0.10}, 9.1);
+
+    // 10.8 — cursor reappears at card 0
+    tl.add(function(){
+      var c = cx(cards[0]);
+      gsap.set(cursor, {x:c.x-3, y:c.y-3, opacity:0});
+    }, 10.7);
+    tl.to(cursor, {opacity:1, duration:0.18}, 10.8);
+    tl.to(cards[0], {
+      y:-5,
+      boxShadow:'0 16px 40px rgba(12,18,33,0.18)',
+      duration:0.28, ease:'power2.out'
+    }, 10.9);
+
+    // settle to ~12.6s then repeatDelay 1.2s
+
+    return tl;
+  }
+
+  document.fonts.ready.then(function(){
+    resetAll();
+    buildTL();
+
+    // prefers-reduced-motion fallback
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      gsap.globalTimeline.pause();
+      ftext.textContent = TYPE_TEXT; ftext.className = 'field-text typed';
+      var step = 0;
+      setInterval(function(){
+        step = (step+1)%2;
+        if (step === 0) {
+          gsap.to(sr, {opacity:0, duration:0.5});
+          gsap.to(ss, {opacity:1, y:0, duration:0.5});
+          gsap.set(hpanel, {y:'100%'});
+          gsap.set(cards,  {opacity:1, y:0});
+          gsap.set(hhead,  {opacity:1, y:0});
+        } else {
+          gsap.to(ss, {opacity:0, duration:0.5});
+          gsap.to(sr, {opacity:1, duration:0.5});
+          gsap.set(hpanel, {y:'0%'});
+          gsap.set(hhead,  {opacity:1, y:0});
+          gsap.set(cards,  {opacity:1, y:0});
+          gsap.set(vprog,  {width:'65%'});
+          gsap.set(vmeta,  {opacity:1, y:0});
+        }
+      }, 3500);
+    }
+  });
+
+  var rt;
+  window.addEventListener('resize', function(){ clearTimeout(rt); rt=setTimeout(computeCoords,150); });
+})();
+</script>
+</body>
+</html>
