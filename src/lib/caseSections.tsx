@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export type CaseSection = {
   heading: string;
   body: string | ReactNode;
-  imageGroups?: { count: number; columns: 1 | 2 | 3 | 4; images?: string[] }[];
+  imageGroups?: { count: number; columns: 1 | 2 | 3 | 4; images?: string[]; className?: string }[];
 };
 
 // Default placeholder sections (used by cases without their own content yet)
@@ -87,7 +87,7 @@ const staynowSections: CaseSection[] = [
     heading: "Key Decision 04 — Turn feedback into a participation loop",
     body: "Reviews are traditionally treated as a transactional task after the trip ends. StayNow reframed them as a way to sustain engagement beyond checkout. Structured reviews, media uploads, and reward points encouraged contribution while creating a richer layer of trust for future travelers. By connecting feedback with incentives, the experience extended beyond a single stay and reinforced the ecosystem over time.",
     imageGroups: [
-      { count: 1, columns: 1, images: ["/staynow-kd04.png"] },
+      { count: 1, columns: 1, images: ["/staynow-kd04.png"], className: "max-w-lg mx-auto" },
     ],
   },
   {

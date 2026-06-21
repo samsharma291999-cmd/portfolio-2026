@@ -67,9 +67,13 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
             transition={{ type: "spring", stiffness: 260, damping: 30, mass: 1 }}
             className="relative aspect-[16/9] w-full overflow-hidden bg-surface-sunken sm:aspect-[21/9]"
           >
-            <div className="flex h-full w-full items-center justify-center font-[family-name:var(--font-display)] text-ink-3">
-              {study.title} cover
-            </div>
+            {study.cover ? (
+              <img src={study.cover} alt={`${study.title} cover`} className="h-full w-full object-contain" />
+            ) : (
+              <div className="flex h-full w-full items-center justify-center font-[family-name:var(--font-display)] text-ink-3">
+                {study.title} cover
+              </div>
+            )}
           </motion.div>
 
           <div className="mx-auto w-full max-w-(--container-content) px-5 py-10 sm:px-6 lg:py-14">
@@ -133,7 +137,7 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
                           : group.columns === 3
                           ? "grid-cols-1 sm:grid-cols-3"
                           : "grid-cols-2"
-                      }`}
+                      } ${group.className ?? ""}`}
                     >
                       {Array.from({ length: group.count }).map((_, ii) => {
                         const src = group.images?.[ii];

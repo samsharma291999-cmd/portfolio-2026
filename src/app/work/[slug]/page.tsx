@@ -93,7 +93,7 @@ export default async function CaseStudyPage({
                       : group.columns === 3
                       ? "grid-cols-1 sm:grid-cols-3"
                       : "grid-cols-2"
-                  }`}
+                  } ${group.className ?? ""}`}
                 >
                   {Array.from({ length: group.count }).map((_, ii) => {
                     const src = group.images?.[ii];
