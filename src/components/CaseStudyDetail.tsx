@@ -138,13 +138,11 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
                       {Array.from({ length: group.count }).map((_, ii) => {
                         const src = group.images?.[ii];
                         return src ? (
-                          <div key={ii} className="aspect-[16/10] overflow-hidden rounded-md bg-surface-sunken">
-                            <img src={src} alt="" className="h-full w-full object-contain" />
-                          </div>
+                          <img key={ii} src={src} alt="" className="w-full rounded-xl" />
                         ) : (
                           <div
                             key={ii}
-                            className="aspect-[16/10] rounded-md bg-surface-sunken"
+                            className="aspect-[16/10] rounded-xl bg-surface-sunken"
                           />
                         );
                       })}
