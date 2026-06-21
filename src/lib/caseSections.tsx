@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 export type CaseSection = {
   heading: string;
   body: string | ReactNode;
-  imageGroups?: { count: number; columns: 1 | 2 | 3 | 4 }[];
+  imageGroups?: { count: number; columns: 1 | 2 | 3 | 4; images?: string[] }[];
 };
 
 // Default placeholder sections (used by cases without their own content yet)
@@ -51,52 +51,65 @@ const staynowSections: CaseSection[] = [
   },
   {
     heading: "Discovery & Strategy",
-    body: "I benchmarked leading OTAs and hospitality products to understand where value was created and where it disappeared. The analysis consistently revealed the same pattern: platforms performed well during booking but abandoned travelers immediately after payment.\n\nQualitative research mapped the end-to-end journey of our primary persona and highlighted the transition between booking and arrival as the point where trust broke down. Through workshops with stakeholders, these insights were translated into a set of principles centered around reducing adoption risk and establishing trust as a new entrant.\n\nThe conclusion was clear: competing on inventory would make StayNow another commodity. Differentiation had to come from continuity and local context.",
+    body: (
+      <>
+        <p className="mt-4 text-lg leading-relaxed text-ink-2">We benchmarked leading OTAs and hospitality products to understand where value was created and where it disappeared. The analysis consistently revealed the same pattern: platforms performed well during booking but abandoned travellers immediately after payment.</p>
+        <p className="mt-4 text-lg leading-relaxed text-ink-2">Qualitative research mapped the end-to-end journey of our primary persona and highlighted the transition between booking and arrival as the point where trust broke down. Through workshops with stakeholders, these insights were translated into a set of principles centered around reducing adoption risk and establishing trust as a new entrant.</p>
+        <p className="mt-4 text-lg leading-relaxed text-ink-2"><strong>The conclusion was clear: competing on inventory would make StayNow another commodity. Differentiation had to come from continuity and local context.</strong></p>
+      </>
+    ),
     imageGroups: [
-      { count: 1, columns: 1 },
-      { count: 1, columns: 1 },
-      { count: 2, columns: 2 },
+      { count: 2, columns: 2, images: ["/staynow-image-01.avif", "/staynow-phases.png"] },
     ],
   },
   {
-    heading: "Key Decision 01 — Compete on trust, not inventory",
-    body: "Rather than chasing feature parity with established OTAs, we positioned StayNow around the fragmented experience surrounding travel itself. The product focused on neighborhood discovery, local narratives, and continuity across the journey, treating booking as a starting point rather than the destination.",
-  },
-  {
-    heading: "Key Decision 02 — Replace price-first discovery with neighborhood-first exploration",
-    body: "Research showed that travelers often chose destinations based on experiences and atmosphere rather than hotel attributes alone. To reflect that behavior, discovery was organized around neighborhoods and local context instead of generic price-sorted lists. Features such as Hotel Stories and verified guides reinforced confidence during decision-making.",
+    heading: "Key Decision 01 — Design travel as a shared experience, not a solo task",
+    body: "Research showed that trip planning was already happening across chats, screenshots, and external tools. Rather than treating travel as an individual activity, the MVP introduced collaborative trips, shared wishlists, group chats, and polling to bring planning into a single experience. The goal was to reduce coordination overhead and make decision-making visible across everyone involved in the trip.",
     imageGroups: [
-      { count: 2, columns: 2 },
-      { count: 4, columns: 2 },
+      { count: 1, columns: 1, images: ["/staynow-kd01.png"] },
     ],
   },
   {
-    heading: "Key Decision 03 — Design for collaboration instead of solo planning",
-    body: "Travel planning rarely happens alone. Shared links, chats, and external tools were already doing the work outside travel platforms. To bring those behaviors into the experience, collaborative trip planning and group decision-making became part of the MVP, transforming planning from an individual task into a shared activity.",
+    heading: "Key Decision 02 — Replace hotel search with location-first discovery",
+    body: "Competing on inventory or price was unrealistic. Instead, discovery centered around neighborhoods, local experiences, and contextual storytelling. Interactive maps, Hotel Stories, and location-driven exploration helped travelers evaluate destinations through atmosphere and experiences rather than generic price-sorted lists. The platform positioned booking as an extension of place, not the other way around.",
     imageGroups: [
-      { count: 3, columns: 3 },
-      { count: 3, columns: 3 },
+      { count: 1, columns: 1, images: ["/staynow-kd02.png"] },
+    ],
+  },
+  {
+    heading: "Key Decision 03 — Extend the experience beyond the booking confirmation",
+    body: "Most OTAs stop providing value once a reservation is made. StayNow was designed to support guests through the transition from booking to arrival. Pre-check-in, ID verification, digital keys, and contextual trip information reduced uncertainty during the highest-anxiety stage of the journey. The objective was to create continuity between reservation and arrival rather than treating them as separate experiences.",
+    imageGroups: [
+      { count: 1, columns: 1, images: ["/staynow-kd03.png"] },
+    ],
+  },
+  {
+    heading: "Key Decision 04 — Turn feedback into a participation loop",
+    body: "Reviews are traditionally treated as a transactional task after the trip ends. StayNow reframed them as a way to sustain engagement beyond checkout. Structured reviews, media uploads, and reward points encouraged contribution while creating a richer layer of trust for future travelers. By connecting feedback with incentives, the experience extended beyond a single stay and reinforced the ecosystem over time.",
+    imageGroups: [
+      { count: 1, columns: 1, images: ["/staynow-kd04.png"] },
     ],
   },
   {
     heading: "Outcome",
     body: (
       <>
-        The MVP shipped within the 90-day timeline and helped communicate a coherent product vision to investors, contributing to a{" "}
-        <a
-          href="https://timesofstartups.com/funding/staynow-secures-2-2m-in-funding-to-empower-independent-hotel-owners/"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-0.5 underline text-accent-ink hover:text-accent-strong transition-colors"
-        >
-          $2.2M seed raise
-          <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true" className="shrink-0 translate-y-[-1px]">
-            <path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </a>{" "}
-        within three months of launch.
-        {"\n\n"}
-        The engagement established a scalable visual language and design system across web and mobile, supporting more than twenty core experiences and providing the foundation for the year-long product roadmap that followed.
+        <p className="mt-4 text-lg leading-relaxed text-ink-2">
+          The MVP shipped within the 90-day timeline and helped communicate a coherent product vision to investors, contributing to a{" "}
+          <a
+            href="https://timesofstartups.com/funding/staynow-secures-2-2m-in-funding-to-empower-independent-hotel-owners/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-0.5 underline text-accent-ink hover:text-accent-strong transition-colors"
+          >
+            $2.2M seed raise
+            <svg width="11" height="11" viewBox="0 0 11 11" fill="none" aria-hidden="true" className="shrink-0 translate-y-[-1px]">
+              <path d="M2 9L9 2M9 2H4M9 2V7" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>{" "}
+          within three months of launch.
+        </p>
+        <p className="mt-4 text-lg leading-relaxed text-ink-2">The engagement established a scalable visual language and design system across web and mobile, supporting more than twenty core experiences and providing the foundation for the year-long product roadmap that followed.</p>
       </>
     ),
   },

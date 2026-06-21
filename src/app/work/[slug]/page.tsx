@@ -35,9 +35,13 @@ export default async function CaseStudyPage({
       </div>
 
       <div className="relative aspect-[16/9] w-full overflow-hidden bg-surface-sunken sm:aspect-[21/9]">
-        <div className="flex h-full w-full items-center justify-center font-[family-name:var(--font-display)] text-ink-3">
-          {study.title} cover
-        </div>
+        {study.cover ? (
+          <img src={study.cover} alt={`${study.title} cover`} className="h-full w-full object-contain" />
+        ) : (
+          <div className="flex h-full w-full items-center justify-center font-[family-name:var(--font-display)] text-ink-3">
+            {study.title} cover
+          </div>
+        )}
       </div>
 
       <div className="mx-auto w-full max-w-(--container-content) px-5 py-10 sm:px-6 lg:py-14">
@@ -71,9 +75,12 @@ export default async function CaseStudyPage({
                 <h2 className="font-[family-name:var(--font-display)] text-2xl font-semibold text-ink">
                   {s.heading}
                 </h2>
-                <p className="mt-4 text-lg leading-relaxed text-ink-2">
-                  {s.body}
-                </p>
+                {typeof s.body === "string"
+                  ? s.body.split("\n\n").map((para, pi) => (
+                      <p key={pi} className="mt-4 text-lg leading-relaxed text-ink-2">{para}</p>
+                    ))
+                  : <div>{s.body}</div>
+                }
               </div>
               {s.imageGroups?.map((group, gi) => (
                 <div
@@ -88,12 +95,16 @@ export default async function CaseStudyPage({
                       : "grid-cols-2"
                   }`}
                 >
-                  {Array.from({ length: group.count }).map((_, ii) => (
-                    <div
-                      key={ii}
-                      className="aspect-[16/10] rounded-md bg-surface-sunken"
-                    />
-                  ))}
+                  {Array.from({ length: group.count }).map((_, ii) => {
+                    const src = group.images?.[ii];
+                    return src ? (
+                      <div key={ii} className="aspect-[16/10] overflow-hidden rounded-md bg-surface-sunken">
+                        <img src={src} alt="" className="h-full w-full object-contain" />
+                      </div>
+                    ) : (
+                      <div key={ii} className="aspect-[16/10] rounded-md bg-surface-sunken" />
+                    );
+                  })}
                 </div>
               ))}
             </div>

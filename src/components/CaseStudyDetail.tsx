@@ -119,7 +119,7 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
                       ? s.body.split("\n\n").map((para, pi) => (
                           <p key={pi} className="mt-4 text-lg leading-relaxed text-ink-2">{para}</p>
                         ))
-                      : <p className="mt-4 text-lg leading-relaxed text-ink-2">{s.body}</p>
+                      : <div>{s.body}</div>
                     }
                   </div>
                   {s.imageGroups?.map((group, gi) => (
@@ -135,12 +135,19 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
                           : "grid-cols-2"
                       }`}
                     >
-                      {Array.from({ length: group.count }).map((_, ii) => (
-                        <div
-                          key={ii}
-                          className="aspect-[16/10] rounded-md bg-surface-sunken"
-                        />
-                      ))}
+                      {Array.from({ length: group.count }).map((_, ii) => {
+                        const src = group.images?.[ii];
+                        return src ? (
+                          <div key={ii} className="aspect-[16/10] overflow-hidden rounded-md bg-surface-sunken">
+                            <img src={src} alt="" className="h-full w-full object-contain" />
+                          </div>
+                        ) : (
+                          <div
+                            key={ii}
+                            className="aspect-[16/10] rounded-md bg-surface-sunken"
+                          />
+                        );
+                      })}
                     </div>
                   ))}
                 </motion.div>

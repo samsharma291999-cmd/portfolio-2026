@@ -21,9 +21,9 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "staynow",
     title: "StayNow",
-    outcome: "Location-first travel platform, concept to MVP in 90 days, contributing to a $2.5M seed raise.",
+    outcome: "Location-first travel platform, concept to MVP in 90 days, contributing to a $2.2M seed raise.",
     role: "Senior Product Designer (UX/Visual)",
-    timeline: "2023 · 3-month MVP sprint",
+    timeline: "2022-2024 First 3 Months MVP Sprint",
     constraints: "Zero behavioral data, 90-day sprint, fixed engineering scope",
     cover: "/case-staynow.jpg",
     lead: true,
