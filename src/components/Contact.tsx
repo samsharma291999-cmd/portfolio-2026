@@ -26,9 +26,12 @@ export default function Contact() {
           </p>
           <a
             href="mailto:sh.sharma2911@gmail.com"
-            className="mt-8 inline-flex h-12 items-center rounded-sm bg-accent-strong px-7 font-[family-name:var(--font-label)] text-[13px] uppercase tracking-[0.06em] text-on-dark dark:text-gray-900 transition-[filter,box-shadow] duration-[var(--duration-micro)] hover:brightness-110 hover:shadow-md active:scale-[0.99]"
+            className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-sm bg-accent-strong px-7 font-[family-name:var(--font-label)] text-[13px] uppercase tracking-[0.06em] text-on-dark dark:text-gray-900 transition-[filter,box-shadow] duration-[var(--duration-micro)] hover:brightness-110 hover:shadow-md active:scale-[0.99]"
           >
             Email Me
+            <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+              <path d="M1.5 6.5H11.5M11.5 6.5L7 2M11.5 6.5L7 11" stroke="currentColor" strokeWidth="1.3" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
           </a>
         </motion.div>
       </div>

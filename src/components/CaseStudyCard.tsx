@@ -44,14 +44,16 @@ export default function CaseStudyCard({ study, index, onOpen }: Props) {
       {isLocked ? (
         <ComingSoonPlaceholder />
       ) : study.cover ? (
-        <Image
-          src={study.cover}
-          alt={`${study.title} cover`}
-          fill
-          className="object-contain"
-          sizes="(max-width: 640px) 100vw, 80vw"
-          priority={study.lead}
-        />
+        <div className={`absolute ${study.lead ? "inset-0" : "inset-3"}`}>
+          <Image
+            src={study.cover}
+            alt={`${study.title} cover`}
+            fill
+            className="object-contain"
+            sizes="(max-width: 640px) 100vw, 80vw"
+            priority={study.lead}
+          />
+        </div>
       ) : (
         <div
           className="flex h-full w-full items-center justify-center font-[family-name:var(--font-display)] text-ink-3"
@@ -99,10 +101,10 @@ export default function CaseStudyCard({ study, index, onOpen }: Props) {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 14 }}
+      initial={{ opacity: 0, y: study.lead ? 28 : 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.36, ease, delay: (index % 4) * 0.07 }}
+      transition={{ duration: study.lead ? 0.48 : 0.4, ease, delay: (index % 4) * 0.12 }}
       className={study.lead ? "col-span-full" : "col-span-full sm:col-span-1"}
     >
       {isLocked ? (
@@ -120,7 +122,11 @@ export default function CaseStudyCard({ study, index, onOpen }: Props) {
         >
           {imageArea}
           {meta}
-          <p className="mt-2 max-w-2xl text-base text-ink-2">{study.outcome}</p>
+          <p className="mt-2 max-w-2xl text-base text-ink-2">
+            {study.outcome.split("\n").map((line, i) => (
+              <span key={i}>{i > 0 && <br />}{line}</span>
+            ))}
+          </p>
         </button>
       )}
     </motion.div>

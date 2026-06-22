@@ -35,9 +35,9 @@ export default function Hero() {
             </span>
             <span className="block overflow-hidden">
               <motion.span
-                initial={{ opacity: 0, y: 24 }}
+                initial={{ opacity: 0, y: 32 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.42, ease, delay: 0.32 }}
+                transition={{ duration: 0.42, ease, delay: 0.36 }}
                 className="block font-bold"
               >
                 decisions.
@@ -92,12 +92,14 @@ export default function Hero() {
         aria-label="Scroll to featured work"
       >
         <span className="flex h-10 w-10 items-center justify-center rounded-full border border-border-strong transition-colors duration-[var(--duration-micro)] group-hover:border-accent-ink">
-          <svg
+          <motion.svg
             width="14"
             height="14"
             viewBox="0 0 14 14"
             fill="none"
             className="text-ink-2 transition-colors duration-[var(--duration-micro)] group-hover:text-accent-ink"
+            animate={{ y: [0, 4, 0] }}
+            transition={{ duration: 1.6, ease: "easeInOut", repeat: Infinity, repeatDelay: 0.4 }}
           >
             <path
               d="M7 1V13M7 13L2 8M7 13L12 8"
@@ -106,7 +108,7 @@ export default function Hero() {
               strokeLinecap="round"
               strokeLinejoin="round"
             />
-          </svg>
+          </motion.svg>
         </span>
         <span className="font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-ink-2">
           See the work

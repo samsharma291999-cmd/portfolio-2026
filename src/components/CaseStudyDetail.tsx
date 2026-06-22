@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { CaseStudy } from "@/lib/content";
 import { getCaseSections, getCaseNotice } from "@/lib/caseSections";
@@ -12,6 +12,8 @@ type Props = {
 
 export default function CaseStudyDetail({ study, onClose }: Props) {
   const closeRef = useRef<HTMLButtonElement>(null);
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [scrollProgress, setScrollProgress] = useState(0);
 
   useEffect(() => {
     if (!study) return;
@@ -27,11 +29,24 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
     };
   }, [study, onClose]);
 
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const onScroll = () => {
+      const { scrollTop, scrollHeight, clientHeight } = el;
+      const max = scrollHeight - clientHeight;
+      setScrollProgress(max > 0 ? scrollTop / max : 0);
+    };
+    el.addEventListener("scroll", onScroll, { passive: true });
+    return () => el.removeEventListener("scroll", onScroll);
+  }, [study]);
+
   return (
     <AnimatePresence>
       {study && (
         <motion.div
           className="fixed inset-0 z-[100] overflow-y-auto bg-canvas"
+          ref={scrollRef}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
@@ -40,7 +55,10 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
           aria-modal="true"
           aria-label={`${study.title} case study`}
         >
-          <div className="sticky top-0 z-10 flex items-center justify-between border-b border-border-hairline bg-canvas/90 px-5 py-4 backdrop-blur-sm sm:px-6">
+          <div className="sticky top-0 z-10 border-b border-border-hairline bg-canvas/90 backdrop-blur-sm">
+            {/* Scroll progress bar */}
+            <div className="absolute bottom-0 left-0 right-0 h-[2px] origin-left bg-accent-ink" style={{ transform: `scaleX(${scrollProgress})`, transformOrigin: "left" }} />
+            <div className="flex items-center justify-between px-5 py-4 sm:px-6">
             <span className="font-[family-name:var(--font-display)] text-base text-ink">
               {study.title}
             </span>
@@ -60,6 +78,7 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
               </svg>
               Close
             </button>
+            </div>
           </div>
 
           <motion.div
@@ -76,7 +95,12 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
             )}
           </motion.div>
 
-          <div className="mx-auto w-full max-w-(--container-content) px-5 py-10 sm:px-6 lg:py-14">
+          <motion.div
+            initial={{ opacity: 0, y: 12 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.32, ease: [0.2, 0, 0, 1], delay: 0.05 }}
+            className="mx-auto w-full max-w-(--container-content) px-5 py-10 sm:px-6 lg:py-14"
+          >
             {/* Fact block: pinned at top, instant scan */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
@@ -173,7 +197,7 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
             >
               ← Back to work
             </button>
-          </div>
+          </motion.div>
         </motion.div>
       )}
     </AnimatePresence>

@@ -65,7 +65,7 @@ function RoleRow({ role, index }: { role: typeof roles[number]; index: number })
           </p>
           <p className="mt-1 text-base text-ink-2">{role.title}</p>
         </div>
-        <p className="font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-ink-3">
+        <p className="shrink-0 whitespace-nowrap font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-ink-3">
           {role.period}
         </p>
       </button>

@@ -1,12 +1,11 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import ThemeToggle from "@/components/ThemeToggle";
 
 const sections = [
   { id: "work", label: "Work" },
-  { id: "perspective", label: "Perspective" },
   { id: "about", label: "About" },
   { id: "contact", label: "Contact" },
 ];
@@ -33,12 +32,14 @@ export default function Navigation() {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          if (entry.isIntersecting) setActive(entry.target.id);
+          if (entry.isIntersecting) {
+            setActive(entry.target.id === "hero" ? "" : entry.target.id);
+          }
         });
       },
       { rootMargin: "-40% 0px -50% 0px" }
     );
-    sections.forEach(({ id }) => {
+    ["hero", ...sections.map((s) => s.id)].forEach((id) => {
       const el = document.getElementById(id);
       if (el) observer.observe(el);
     });
@@ -75,7 +76,7 @@ export default function Navigation() {
             <a
               key={id}
               href={`#${id}`}
-              className="relative font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-ink-2 transition-colors duration-[var(--duration-micro)] hover:text-ink"
+              className="relative font-[family-name:var(--font-label)] text-[13px] uppercase tracking-[0.04em] text-ink-2 transition-colors duration-[var(--duration-micro)] hover:text-ink"
               aria-current={active === id ? "true" : undefined}
             >
               {label}
@@ -116,24 +117,33 @@ export default function Navigation() {
       </div>
 
       {/* Mobile full-height list */}
-      {menuOpen && (
-        <nav
-          style={{ top: barHeight, height: `calc(100vh - ${barHeight}px)` }}
-          className="fixed inset-x-0 flex flex-col gap-1 overflow-y-auto border-t border-border-hairline bg-canvas px-5 py-6 sm:hidden"
-          aria-label="Section navigation"
-        >
-          {sections.map(({ id, label }) => (
-            <a
-              key={id}
-              href={`#${id}`}
-              onClick={() => setMenuOpen(false)}
-              className="py-3 font-[family-name:var(--font-display)] text-3xl text-ink"
-            >
-              {label}
-            </a>
-          ))}
-        </nav>
-      )}
+      <AnimatePresence>
+        {menuOpen && (
+          <motion.nav
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.18 }}
+            style={{ top: barHeight, height: `calc(100vh - ${barHeight}px)` }}
+            className="fixed inset-x-0 flex flex-col gap-1 overflow-y-auto border-t border-border-hairline bg-canvas px-5 py-6 sm:hidden"
+            aria-label="Section navigation"
+          >
+            {sections.map(({ id, label }, i) => (
+              <motion.a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setMenuOpen(false)}
+                initial={{ opacity: 0, y: 8 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.22, ease: [0.2, 0, 0, 1], delay: i * 0.04 }}
+                className="py-3 font-[family-name:var(--font-display)] text-3xl text-ink"
+              >
+                {label}
+              </motion.a>
+            ))}
+          </motion.nav>
+        )}
+      </AnimatePresence>
     </header>
   );
 }

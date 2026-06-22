@@ -22,7 +22,7 @@ export const caseStudies: CaseStudy[] = [
   {
     slug: "staynow",
     title: "StayNow",
-    outcome: "Location-first travel platform, concept to MVP in 90 days, contributing to a $2.2M seed raise.",
+    outcome: "Built a location-first travel platform from concept to\nMVP in 90 days, helping secure a $2.2M seed round.",
     role: "Senior Product Designer (UX/Visual)",
     timeline: "2022-2024 First 3 Months MVP Sprint",
     constraints: "Zero behavioral data, 90-day sprint, fixed engineering scope",
@@ -57,12 +57,11 @@ export const impactFigures: ImpactFigure[] = [
     linkedCase: "staynow",
     externalLink: "https://timesofstartups.com/funding/staynow-secures-2-2m-in-funding-to-empower-independent-hotel-owners/",
   },
-  { figure: "3 Industries", label: "Spanning AI, SaaS, and Travel" },
+  { figure: "3 Domains", label: "Spanning AI, SaaS, and Travel" },
   { figure: "5 Years", label: "Turning ambiguity into systems" },
   {
     figure: "0→1",
     label: "Products designed from concept to launch",
-    labelLines: ["Products designed from concept", "to launch"],
   },
 ];
 
