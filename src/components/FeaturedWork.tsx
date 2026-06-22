@@ -26,7 +26,7 @@ export default function FeaturedWork() {
             Featured work
           </h2>
           <p className="mt-3 max-w-xl text-lg text-ink-2">
-            Four projects, chosen for the decisions behind them rather than
+            Three projects, chosen for the decisions behind them rather than
             the polish on top.
           </p>
         </motion.div>

@@ -25,8 +25,8 @@ export default function Contact() {
             The fastest way to reach me is email. I respond within a day.
           </p>
           <a
-            href="mailto:sam.sharma291999@gmail.com"
-            className="mt-8 inline-flex h-12 items-center rounded-sm bg-accent-strong px-7 font-[family-name:var(--font-label)] text-[13px] uppercase tracking-[0.06em] text-on-dark transition-[filter,box-shadow] duration-[var(--duration-micro)] hover:brightness-110 hover:shadow-md active:scale-[0.99]"
+            href="mailto:sh.sharma2911@gmail.com"
+            className="mt-8 inline-flex h-12 items-center rounded-sm bg-accent-strong px-7 font-[family-name:var(--font-label)] text-[13px] uppercase tracking-[0.06em] text-on-dark dark:text-gray-900 transition-[filter,box-shadow] duration-[var(--duration-micro)] hover:brightness-110 hover:shadow-md active:scale-[0.99]"
           >
             Email Me
           </a>

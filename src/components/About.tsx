@@ -9,35 +9,35 @@ const roles = [
   {
     company: "BotPenguin",
     title: "Assistant Manager – Product Design",
-    period: "Apr 2026 toPresent",
+    period: "Apr 2026 – Present",
     detail:
       "Translating product requirements into user-centered solutions across web and mobile. Led ideation for the AI ChatFlow Builder and conducted UX audits identifying 55+ usability issues.",
   },
   {
     company: "Consumer Electronics Venture",
     title: "Co-Founder",
-    period: "Jan 2025 toDec 2025",
+    period: "Jan 2025 – Dec 2025",
     detail:
       "Designed interfaces for inventory and credit tracking systems, simplifying operational workflows and enabling scalable business operations.",
   },
   {
     company: "UXReactor",
     title: "Senior Visual Designer",
-    period: "Nov 2022 toSep 2024",
+    period: "Nov 2022 – Sep 2024",
     detail:
       "Designed 500+ screens across 20+ complex workflows. Led end-to-end UX for StayNow MVP, contributing to a $2.2M seed raise. Built a design system that increased development velocity by 60%.",
   },
   {
     company: "UXReactor",
     title: "Visual Designer",
-    period: "Apr 2021 toOct 2022",
+    period: "Apr 2021 – Oct 2022",
     detail:
       "Redesigned a Fortune 500 cloud data platform, converting dense workflows into accessible interfaces that boosted task completion by 35%.",
   },
   {
     company: "UXReactor",
     title: "Associate Visual Designer",
-    period: "Jan 2020 toMar 2021",
+    period: "Jan 2020 – Mar 2021",
     detail:
       "Designed responsive web and mobile interfaces, translating wireframes into production-ready visuals with strong attention to typography, layout, and interaction design.",
   },

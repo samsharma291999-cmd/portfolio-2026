@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { CaseStudy } from "@/lib/content";
-import { getCaseSections } from "@/lib/caseSections";
+import { getCaseSections, getCaseNotice } from "@/lib/caseSections";
 
 type Props = {
   study: CaseStudy | null;
@@ -105,6 +105,16 @@ export default function CaseStudyDetail({ study, onClose }: Props) {
             <p className="mt-3 max-w-(--container-reading) text-lg text-ink-2">
               {study.outcome}
             </p>
+
+            {getCaseNotice(study.slug) && (
+              <div className="mt-6 flex items-start gap-2.5 rounded-lg border border-border-hairline bg-surface-sunken px-4 py-3 text-sm text-ink-3">
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" className="mt-0.5 shrink-0" aria-hidden="true">
+                  <circle cx="7" cy="7" r="6" stroke="currentColor" strokeWidth="1.2" />
+                  <path d="M7 6v4M7 4.5v.5" stroke="currentColor" strokeWidth="1.2" strokeLinecap="round" />
+                </svg>
+                <span>{getCaseNotice(study.slug)}</span>
+              </div>
+            )}
 
             <div className="mt-14 flex flex-col gap-14">
               {getCaseSections(study.slug).map((s, i) => (

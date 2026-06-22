@@ -22,9 +22,9 @@ export default function Footer() {
           </p>
           <nav className="flex gap-6">
             {[
-              { label: "Email", href: "mailto:sam.sharma291999@gmail.com" },
-              { label: "LinkedIn", href: "#" },
-              { label: "GitHub", href: "#" },
+              { label: "Email", href: "mailto:sh.sharma2911@gmail.com" },
+              { label: "LinkedIn", href: "https://www.linkedin.com/in/shivamsharma2911" },
+              { label: "GitHub", href: "https://github.com/samsharma291999-cmd" },
             ].map((link) => (
               <a
                 key={link.label}

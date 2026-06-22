@@ -15,6 +15,7 @@ export type CaseStudy = {
   constraints?: string;
   cover: string;
   lead?: boolean;
+  comingSoon?: boolean;
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -29,21 +30,22 @@ export const caseStudies: CaseStudy[] = [
     lead: true,
   },
   {
-    slug: "botpenguin",
-    title: "BotPenguin",
-    outcome: "Led product design across AI-powered customer engagement workflows, balancing growth, usability, and system consistency.",
-    role: "Assistant Manager – Product Design",
-    timeline: "2026",
-    cover: "/case-botpenguin.jpg",
-  },
-  {
     slug: "cloud-data-platform",
     title: "B2B Cloud Data Product",
     outcome: "Reduced Time-to-First-Query by 40% for a Fortune 500 cloud data platform.",
     role: "Product Designer (UX + Visual)",
     timeline: "1-month sprint, 1.6-year engagement",
-    constraints: "Fortune 500 enterprise, trial activation scope, 1-month sprint",
+    constraints: "Trial activation scope, 1-month sprint",
     cover: "/case-cloud-data.jpg",
+  },
+  {
+    slug: "botpenguin",
+    title: "BotPenguin",
+    outcome: "AI-powered customer engagement platform — redesigning ChatFlow Builder and core workflows for growth and usability.",
+    role: "Assistant Manager – Product Design",
+    timeline: "2026 – Present",
+    cover: "/case-botpenguin.jpg",
+    comingSoon: true,
   },
 ];
 

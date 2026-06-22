@@ -122,55 +122,49 @@ const staynowSections: CaseSection[] = [
 const cloudDataPlatformSections: CaseSection[] = [
   {
     heading: "Problem",
-    body: "Powerful technology, low activation. The platform delivered real value to technical users who reached it, but most trial users never got there. Four friction points blocked them at the start: an empty workspace with no orientation, complete dependency on external documentation, generic onboarding that ignored role or use case, and a core experience that was only discoverable after significant setup. The result was high trial abandonment before users ever saw what the product could do.",
+    body: "Despite industry-leading query performance, the platform struggled to convert trial users into activated customers. Sales feedback revealed a consistent pattern: users abandoned the platform before experiencing its core value. Warehouse setup was lengthy, documentation lived outside the product, and new users were often dropped into empty states with little guidance. The result was a growing gap between technical capability and user activation.\n\nThe opportunity was not to simplify the product itself, but to reduce the distance between signup and the first successful query.",
   },
   {
     heading: "Context & Constraints",
-    body: "The client was a Fortune 500 enterprise with an established cloud data platform. The engagement ran 1.6 years in total, but this project was scoped to a single month, focused exclusively on the trial activation path. Scope could not expand to include the full product, infrastructure, or onboarding backend. Every decision had to work within what already existed.",
+    body: "The project was a one-month sprint within a broader 1.6-year engagement with a Fortune 500 cloud data company. Engineering capacity and timelines were fixed, while the objective was clear: transition a high-touch onboarding process into a scalable self-service experience. With limited time and no room for large architectural changes, the redesign had to focus on activation rather than expanding functionality. Success depended on helping users experience value quickly without sacrificing the platform's technical depth.",
   },
   {
     heading: "Discovery & Strategy",
-    body: "The research question was not what is wrong with onboarding but what makes trials work. The insight that reframed the project: great trials do not explain value. They engineer it.\n\nWe audited activation patterns across enterprise SaaS products and identified four characteristics that distinguished successful trials: they captured context early to personalize the experience, they brought support into the product rather than routing users out to documentation, they removed blank states that left users without a starting point, and they guided without restricting, steering users toward value without locking them into a single path.",
-    imageGroups: [
-      { count: 1, columns: 1 },
-      { count: 2, columns: 2 },
-    ],
+    body: "An audit of the existing experience revealed four major friction points. Users landed on a dead-end warehouse screen without clear next steps, documentation forced them into external websites, all personas followed the same generic path, and the platform's most important action, running a query, remained hidden behind multiple layers.\n\nBenchmarking enterprise platforms and cross-domain SaaS products showed a different pattern. Successful onboarding experiences maintained momentum through progressive profiling, embedded support, and contextual guidance rather than overwhelming users with documentation. Conversations with stakeholders and technical subject matter experts further highlighted that Data Engineers and Database Administrators had fundamentally different goals, yet both needed to reach value quickly.\n\nThese insights led to a simple conclusion: great trials don't explain value, they engineer it. Activation had to become the product's primary experience rather than a prerequisite to it.",
+    imageGroups: [{ count: 2, columns: 2, images: ["/aero-ds-signup.png", "/aero-ds-old-dashboard.png"] }],
   },
   {
-    heading: "Key Decision 01 — Capture context at the start, not at setup",
-    body: "We introduced an environment personalization step at trial entry. By asking a few targeted questions about role and use case upfront, the product could shape the workspace before users encountered it, eliminating the blank-state problem and setting a more relevant starting point.",
-    imageGroups: [
-      { count: 2, columns: 2 },
-    ],
+    heading: "Key Decision 01 Personalize the environment, not just the interface",
+    body: "Traditional onboarding assumed users would adapt to the product. Instead, the experience captured technical context and user goals during signup to shape the workspace around their needs. Role-based tasks and environment configuration reduced unnecessary setup and created momentum immediately after account creation. Rather than entering a generic platform, users entered an experience designed around the outcome they wanted to achieve.",
+    imageGroups: [{ count: 2, columns: 2, images: ["/aero-kd01-smart-entry.png", "/aero-kd01-context-capture.png"] }],
   },
   {
-    heading: "Key Decision 02 — Make support part of the product",
-    body: "Rather than routing users to external documentation, we embedded contextual guidance directly into the interface. Help surfaced where and when it was relevant, reducing the dependency on outside resources and keeping users inside the product during the moments they were most likely to abandon.",
-    imageGroups: [
-      { count: 2, columns: 2 },
-    ],
+    heading: "Key Decision 02 Bring support inside the workflow",
+    body: "The biggest source of drop-off wasn't complexity itself, but the interruption caused by leaving the product. Documentation, guidance, and communication were integrated directly into the experience through contextual help and an in-product inbox. Users could learn, ask questions, and continue working without losing momentum. Support became part of the workflow instead of a separate destination.",
+    imageGroups: [{ count: 1, columns: 1, images: ["/aero-kd02-guidance.png"] }],
   },
   {
-    heading: "Key Decision 03 — Pre-load the workspace with sample data",
-    body: "Instead of asking users to connect data sources before they had seen any value, we shipped a ready-to-run workspace with sample datasets. Users could run their first query immediately, experiencing the core value of the product before any setup was required.",
-    imageGroups: [
-      { count: 3, columns: 3 },
-    ],
+    heading: "Key Decision 03 Guide users toward activation instead of expecting discovery",
+    body: "The original information architecture prioritized administration over activation, leaving users responsible for discovering value themselves. Navigation was restructured to surface critical tasks, while progress indicators and contextual nudges provided clear next steps. Rather than presenting a powerful but overwhelming platform, the experience actively guided users toward the milestone that mattered most.",
+    imageGroups: [{ count: 1, columns: 1, images: ["/aero-kd03-inbox.png"] }],
   },
   {
-    heading: "Key Decision 04 — Reinforce value through validation",
-    body: "To accelerate confidence, we added social proof and performance indicators at key moments in the trial. Seeing that similar companies had succeeded, alongside real query performance data, gave users a signal that the product could deliver before they had committed to full integration.",
-    imageGroups: [
-      { count: 2, columns: 2 },
-    ],
+    heading: "Key Decision 04 Eliminate the blank cursor problem",
+    body: "The query editor represented the platform's \"Aha!\" moment, yet users were greeted with an empty environment and little confidence about what to do next. Instead of forcing exploration, the workspace was populated with meaningful sample data and prepared queries that provided a warm start. Users could validate performance immediately, reducing uncertainty and shortening the path to their first successful query.",
+    imageGroups: [{ count: 1, columns: 1, images: ["/aero-kd04-query-env.png"] }],
+  },
+  {
+    heading: "Key Decision 05 Reinforce value through visible proof",
+    body: "Running a query alone wasn't enough. Users also needed confidence that the platform delivered on its promise. Performance feedback and social validation were introduced to reinforce trust and connect technical actions with tangible outcomes. Instead of asking users to believe in the platform, the experience continuously demonstrated its capabilities.",
+    imageGroups: [{ count: 1, columns: 1, images: ["/aero-kd05-performance-proof.png"] }],
   },
   {
     heading: "Outcome",
-    body: "Time-to-First-Query dropped by 40%. The embedded guidance removed the primary source of trial abandonment. The activation path shifted from requiring support intervention to being self-serve. The approach also produced a reusable activation framework that the product team could apply beyond the trial scope.",
+    body: "The redesign transformed warehouse setup from a major sales bottleneck into a high-velocity activation flow. By focusing on reducing friction and guiding users toward meaningful milestones, the experience reduced Time-to-First-Query by 40% and shifted the platform from a manual onboarding process toward a scalable self-service model.\n\nThe project established a repeatable activation framework that aligned user success with business outcomes, proving that increasing adoption wasn't about adding more education, but about helping users experience value sooner.",
   },
   {
     heading: "Lessons Learned",
-    body: "Enterprise products do not need to hide sophistication. They need to reveal it at the right time. The instinct in complex products is often to simplify or reduce, but the real problem here was sequencing. Users were not leaving because the product was too hard. They were leaving before they understood what it was.",
+    body: "Complex enterprise products don't fail because users lack information. They fail when users are unable to connect capabilities with outcomes. Working within a one-month sprint reinforced that activation is not a stage before the product, it is the product.\n\nThe most impactful decisions were not about simplifying technical complexity. They were about designing momentum and ensuring users reached value before complexity had a chance to overwhelm them.",
   },
 ];
 
@@ -178,4 +172,11 @@ export function getCaseSections(slug: string): CaseSection[] {
   if (slug === "staynow") return staynowSections;
   if (slug === "cloud-data-platform") return cloudDataPlatformSections;
   return caseSections;
+}
+
+export function getCaseNotice(slug: string): string | null {
+  if (slug === "cloud-data-platform") {
+    return "Client name and identifying details have been changed to protect confidentiality.";
+  }
+  return null;
 }
