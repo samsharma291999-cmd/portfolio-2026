@@ -116,12 +116,12 @@ export default async function CaseStudyPage({
             rel="noopener noreferrer"
             className="mt-14 flex items-center gap-4 rounded-xl border border-border-hairline bg-surface-raised px-6 py-5 transition-colors hover:border-accent-ink/40 hover:bg-surface-raised"
           >
-            <svg width="32" height="32" viewBox="0 0 38 57" fill="none" aria-hidden="true" className="shrink-0">
-              <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
-              <path d="M9.5 47.5A9.5 9.5 0 0 1 19 38h9.5v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
-              <path d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z" fill="#FF7262"/>
-              <path d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" fill="#F24E1E"/>
-              <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/>
+            <svg width="24" height="36" viewBox="0 0 38 57" fill="none" aria-hidden="true" className="shrink-0">
+              <path d="M19 28.5C19 23.2533 23.2533 19 28.5 19C33.7467 19 38 23.2533 38 28.5C38 33.7467 33.7467 38 28.5 38C23.2533 38 19 33.7467 19 28.5Z" fill="#1ABCFE"/>
+              <path d="M0 47.5C0 42.2533 4.25329 38 9.5 38H19V47.5C19 52.7467 14.7467 57 9.5 57C4.25329 57 0 52.7467 0 47.5Z" fill="#0ACF83"/>
+              <path d="M19 0H28.5C33.7467 0 38 4.25329 38 9.5C38 14.7467 33.7467 19 28.5 19H19V0Z" fill="#FF7262"/>
+              <path d="M0 9.5C0 4.25329 4.25329 0 9.5 0H19V19H9.5C4.25329 19 0 14.7467 0 9.5Z" fill="#F24E1E"/>
+              <path d="M0 28.5C0 23.2533 4.25329 19 9.5 19H19V38H9.5C4.25329 38 0 33.7467 0 28.5Z" fill="#A259FF"/>
             </svg>
             <div className="flex-1 min-w-0">
               <p className="font-[family-name:var(--font-display)] text-base font-semibold text-ink">View Design Files</p>
