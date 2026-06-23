@@ -16,6 +16,7 @@ export type CaseStudy = {
   cover: string;
   lead?: boolean;
   comingSoon?: boolean;
+  figmaLink?: { url: string; description: string };
 };
 
 export const caseStudies: CaseStudy[] = [
@@ -28,6 +29,10 @@ export const caseStudies: CaseStudy[] = [
     constraints: "Zero behavioral data, 90-day sprint, fixed engineering scope",
     cover: "/case-staynow.jpg",
     lead: true,
+    figmaLink: {
+      url: "https://www.figma.com/design/PmVPBB9iMQ5n9qM1IXYqwN/StayNow-Figma-Links?node-id=6-5&t=yeHW6YQFWxhcvlsE-1",
+      description: "All design artefacts across 4 phases — web & mobile",
+    },
   },
   {
     slug: "cloud-data-platform",

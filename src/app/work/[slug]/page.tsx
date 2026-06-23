@@ -109,9 +109,33 @@ export default async function CaseStudyPage({
           ))}
         </div>
 
+        {study.figmaLink && (
+          <a
+            href={study.figmaLink.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-14 flex items-center gap-4 rounded-xl border border-border-hairline bg-surface-raised px-6 py-5 transition-colors hover:border-accent-ink/40 hover:bg-surface-raised"
+          >
+            <svg width="32" height="32" viewBox="0 0 38 57" fill="none" aria-hidden="true" className="shrink-0">
+              <path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
+              <path d="M9.5 47.5A9.5 9.5 0 0 1 19 38h9.5v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
+              <path d="M0 9.5A9.5 9.5 0 0 1 9.5 0H19v19H9.5A9.5 9.5 0 0 1 0 9.5z" fill="#FF7262"/>
+              <path d="M19 0h9.5a9.5 9.5 0 0 1 0 19H19V0z" fill="#F24E1E"/>
+              <path d="M0 28.5A9.5 9.5 0 0 1 9.5 19H19v19H9.5A9.5 9.5 0 0 1 0 28.5z" fill="#A259FF"/>
+            </svg>
+            <div className="flex-1 min-w-0">
+              <p className="font-[family-name:var(--font-display)] text-base font-semibold text-ink">View Design Files</p>
+              <p className="mt-0.5 text-sm text-ink-2">{study.figmaLink.description}</p>
+            </div>
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" className="shrink-0 text-ink-3">
+              <path d="M3 13L13 3M13 3H6M13 3V10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+            </svg>
+          </a>
+        )}
+
         <Link
           href="/#work"
-          className="mt-16 inline-block font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-accent-ink hover:text-accent-strong"
+          className="mt-10 inline-block font-[family-name:var(--font-label)] text-[12px] uppercase tracking-[0.06em] text-accent-ink hover:text-accent-strong"
         >
           ← Back to work
         </Link>
