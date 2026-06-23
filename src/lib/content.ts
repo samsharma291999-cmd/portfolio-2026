@@ -30,7 +30,7 @@ export const caseStudies: CaseStudy[] = [
     cover: "/case-staynow.jpg",
     lead: true,
     figmaLink: {
-      url: "https://www.figma.com/design/PmVPBB9iMQ5n9qM1IXYqwN/StayNow-Figma-Links?node-id=6-5&t=yeHW6YQFWxhcvlsE-1",
+      url: "https://www.figma.com/proto/PmVPBB9iMQ5n9qM1IXYqwN/StayNow-Figma-Links?node-id=6-5&p=f&viewport=-112%2C706%2C0.53&t=CjTyKgv0fdXTEAl3-1&scaling=contain&content-scaling=fixed&starting-point-node-id=6%3A5&page-id=0%3A1",
       description: "All design artefacts across 4 phases — web & mobile",
     },
   },
